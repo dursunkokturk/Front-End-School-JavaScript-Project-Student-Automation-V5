@@ -142,5 +142,13 @@ const students = [
 ];
 
 for (const student of students){
+  studentInformations.innerHTML += `
+    <tr>
+      <td>${student.firstName}</td>
+      <td>${student.lastName}</td>
+      <td>${student.age}</td>
+      <td>${student.gender}</td>
+      <td>${student.photo}</td>
+    </tr>`;
   console.log(`Öğrenci Adı : ${student.firstName} Öğrenci Soyadı : ${student.lastName} Öğrenci Yaşı : ${student.age} Öğrenci Cinyeti : ${student.gender} Öğrenci Fotoğrafı : ${student.photo}`);
 }
