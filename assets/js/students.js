@@ -145,17 +145,17 @@ const initialStudents = [
 let students = [...initialStudents];
 
 // Sayfa Acildiginda Students Array Icindeki Ogrencileri listeleliyoruz
-window.onload = function() {
+window.onload = function () {
   studentsList();
 };
 
 /* Ogrenci Ekleme Butonuna Tiklandiktan Sonra
 Girilen Bilgileri Mevcut Bilgilerle Birlestirip Yazdiriyoruz */
-function studentsList(){
-  
+function studentsList() {
+
   addstudentInformations.innerHTML = "";
 
-  for (const student of students){
+  for (const student of students) {
     addstudentInformations.innerHTML += `
       <tr>
         <td>${student.firstName}</td>
@@ -164,13 +164,14 @@ function studentsList(){
         <td>${student.gender}</td>
         <td>${student.photo}</td>
         <td><button onclick="studentDelete(this)">Sil</button></td>
+        <td><button onclick="studentUpdate(this)">Düzenle</button></td>
       </tr>`;
     console.log(`Öğrenci Adı : ${student.firstName} Öğrenci Soyadı : ${student.lastName} Öğrenci Yaşı : ${student.age} Öğrenci Cinyeti : ${student.gender} Öğrenci Fotoğrafı : ${student.photo}`);
   }
 }
 
 /* Ekleme Fonksiyonunu HTML Dosyasinda Bulunan Buton Uzerinden Cagiriyoruz */
-function studentAdd(){
+function studentAdd() {
   let newStudentFirstName = prompt("Eklenecek Öğrencinin Adını Giriniz");
   let newStudentLastName = prompt("Eklenecek Öğrencinin Soydını Giriniz");
   let newStudentAge = Number(prompt("Eklenecek Öğrencinin Yaşını Giriniz"));
@@ -178,13 +179,13 @@ function studentAdd(){
   let newStudentPhoto = prompt("Eklenecek Öğrencinin Fotoğrafını Giriniz");
 
   let newStudent = {
-    firstName:newStudentFirstName,
-    lastName:newStudentLastName,
-    age:newStudentAge,
-    gender:newStudentGender,
-    photo:newStudentPhoto,
+    firstName: newStudentFirstName,
+    lastName: newStudentLastName,
+    age: newStudentAge,
+    gender: newStudentGender,
+    photo: newStudentPhoto,
   }
-  
+
   students.push(newStudent);
 
   // studentsList();
@@ -197,26 +198,67 @@ function studentAdd(){
     <td>${newStudent.gender}</td>
     <td>${newStudent.photo}</td>
     <td><button onclick="studentDelete(this)">Sil</button></td>
+    <td><button onclick="studentUpdate(this)">Düzenle</button></td>
   </tr>`;
-  
+
   console.log(`Eklenen Öğrencinin Adı : ${newStudent.firstName} Eklenen Öğrencinin Soyadı : ${newStudent.lastName} Eklenen Öğrencinin Yaşı : ${newStudent.age} Eklenen Öğrencinin Cinsiyeti : ${newStudent.gender} Eklenen Öğrencinin Fotoğrafı : ${newStudent.photo}`);
 }
 
-function studentDelete(button){
+function studentDelete(button) {
   // Kullanicidan Onay Istiyoruz
-  if(confirm("Bu öğrenciyi silmek istediğinizden emin misiniz?")){
+  if (confirm("Bu öğrenciyi silmek istediğinizden emin misiniz?")) {
     // Butona Tiklandiginda Tiklanan Satiri Buluyoruz
     let row = button.parentElement.parentElement;
-    
+
     // Tiklanan Satira Karsilik Gelen index'i Degerini Buluyoruz
     let rowIndex = row.rowIndex - 1;
-    
+
     // students Array Icinden Silme Islemini Yapiyoruz
     students.splice(rowIndex, 1);
-    
+
     // HTML'den Satiri Siliyoruz
     row.remove();
-    
+
     alert("Öğrenci Silindi");
+  }
+}
+
+function studentUpdate(button) {
+  if (confirm("Bu Öğrencinin Bilgilerini Düzenlemek İstiyor Musunuz?")) {
+    let row = button.parentElement.parentElement;
+    let rowIndex = row.rowIndex - 1;
+
+    // Update Islemi Icin Tiklanilan Ogrenci Bilgisinin Index Numarasi Uzerinden
+    // Ogrencinin Array Icindeki Data'larina Ulasiyoruz
+    let student = students[rowIndex];
+
+    let newFirstName = prompt('Yeni İsmi Giriniz:');
+    let newLastName = prompt('Yeni Soyismi Giriniz:');
+    let newAge = prompt('Yeni Yaşı Giriniz:');
+    let newGender = prompt('Yeni Cinsiyeti Giriniz:');
+    let newPhoto = prompt('Yeni Fotoğrafı giriniz:');
+
+    // Eğer Kullanici Islemi Iptal Etmedi Ise Guncelle
+    if (newFirstName && newLastName && newAge && newGender && newPhoto) {
+
+      // Secilen Ogrencinin Bilgilerini Guncelliyoruz
+      students[rowIndex] = {
+        firstName: newFirstName,
+        lastName: newLastName,
+        age: newAge,
+        gender: newGender,
+        photo: newPhoto
+      };
+
+      // Student Array Icinde Yapilan Guncelleme Islemini 
+      // HTML'de Gorunur Hale Getiriyoruz
+      row.cells[0].innerText = newFirstName;
+      row.cells[1].innerText = newLastName;
+      row.cells[2].innerText = newAge;
+      row.cells[3].innerText = newGender;
+      row.cells[4].innerText = newPhoto;
+
+      alert("Öğrencinin Bilgileri Güncellendi");
+    }
   }
 }
