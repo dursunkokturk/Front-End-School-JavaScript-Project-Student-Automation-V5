@@ -273,7 +273,7 @@ function studentSearch(){
   for(let i=0; i<students.length;i++){
 
     if(searchedName === students[i].firstName.toLowerCase()){
-      addstudentInformations.innerHTML += `
+      searchstudentInformations.innerHTML += `
         <tr>
           <td>${students[i].firstName}</td>
           <td>${students[i].lastName}</td>
