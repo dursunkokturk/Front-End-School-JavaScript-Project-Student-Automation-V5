@@ -170,6 +170,69 @@ function studentsList() {
   }
 }
 
+searchForm.addEventListener("submit", function (e) {
+
+  // Tuşlara Her Basma Isleminde Sayfanın Yenilenmesini Engelliyoruz
+  e.preventDefault();
+
+  // Arama Isleminin Yapilacagi Alana Girilen Degerleri Aliyoruz
+  let searchedValue = searchInput.value.toLowerCase().trim();
+
+  // Uygulama Ilk Calistirildiginda ve 
+  // Arama Islemi Sonucunda 
+  // Arama Islemininin Yapilacagi Alanin Her Zaman Temiz Kalmasini Sagliyoruz
+  resultArea.innerHTML = "";
+
+  // Arama Sonucunda Elde Edilen Ogrenci Bilgilerini Tutmak Icin Bos Array Olusturuyoruz 
+  let foundStudents = [];
+
+  students.forEach(function (student) {
+
+    // Kullanicidan Alinan Isim students Array Icinde Var Mi Kontrolunu Yapiyoruz
+    if (student.firstName.toLowerCase().includes(searchedValue)) {
+      foundStudents.push(student);
+    }
+  });
+
+  // Arama Isleminin Sonucunda Data Varsa Dom Uzerinden Listeliyoruz
+  if (foundStudents.length > 0) {
+    let tableHTML = `
+      <table border="1" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Yaş</th>
+            <th>Cinsiyet</th>
+            <th>Fotoğraf</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+
+    foundStudents.forEach(function (student) {
+      tableHTML += `
+        <tr>
+          <td>${student.firstName}</td>
+          <td>${student.lastName}</td>
+          <td>${student.age}</td>
+          <td>${student.gender}</td>
+          <td><img src="${student.photo}" width="50"></td>
+        </tr>
+      `;
+    });
+
+    tableHTML += `
+        </tbody>
+      </table>
+    `;
+
+    resultArea.innerHTML = tableHTML;
+  } else {
+    resultArea.innerHTML = "<p>Sonuç bulunamadı</p>";
+  }
+});
+
 /* Ekleme Fonksiyonunu HTML Dosyasinda Bulunan Buton Uzerinden Cagiriyoruz */
 function studentAdd() {
   let newStudentFirstName = prompt("Eklenecek Öğrencinin Adını Giriniz");
@@ -263,19 +326,19 @@ function studentUpdate(button) {
   }
 }
 
-function studentSearch(){
+function studentSearch() {
 
   let searchArea = querySelector("#studentInformations").value;
   console.log(searchArea);
-  
+
   /* Ara Butonuna Tiklandiginda
     input Elementi Icindeki Degere Ulasiyoruz */
   let searchedName = studentName.value.toLowerCase();
   console.log(searchedName);
 
-  for(let i=0; i<students.length;i++){
+  for (let i = 0; i < students.length; i++) {
 
-    if(searchedName === students[i].firstName.toLowerCase()){
+    if (searchedName === students[i].firstName.toLowerCase()) {
       studentInformations.innerHTML += `
         <tr>
           <td>${students[i].firstName}</td>
