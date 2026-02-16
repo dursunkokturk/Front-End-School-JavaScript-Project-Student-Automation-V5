@@ -145,9 +145,15 @@ const initialStudents = [
 let students = [...initialStudents];
 
 // Sayfa Acildiginda Students Array Icindeki Ogrencileri listeleliyoruz
-window.onload = function () {
+// window.onload = function () {
+//   studentsList();
+// };
+
+function reset(){
+  searchInput = document.querySelector("#searchInput").value = "";
+  console.log(searchInput);
   studentsList();
-};
+}
 
 /* Ogrenci Ekleme Butonuna Tiklandiktan Sonra
 Girilen Bilgileri Mevcut Bilgilerle Birlestirip Yazdiriyoruz */
