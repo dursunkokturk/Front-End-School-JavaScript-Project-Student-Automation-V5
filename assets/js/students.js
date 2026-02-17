@@ -145,9 +145,7 @@ const initialStudents = [
 let students = [...initialStudents];
 
 // Sayfa Acildiginda Students Array Icindeki Ogrencileri listeleliyoruz
-window.onload = function () {
-  studentsList();
-};
+studentsList();
 
 /* Ogrenci Ekleme Butonuna Tiklandiktan Sonra
 Girilen Bilgileri Mevcut Bilgilerle Birlestirip Yazdiriyoruz */
